@@ -29,16 +29,6 @@ sudo dhclient enp0s8
 sudo apt-get install openssh-server
 sudo service ssh open
 ```
-4.在宿主机上通过已将下载好的putty远程连接到ubuntu 18.04服务器
- - 填写远程服务器IP地址:192.168.56.101
- - ssh连接端口:22
- - 选择连接方式:SSH
-
-![](/Linux系统与网络管理/chap0x01/images/4-4-1.png)
-![](/Linux系统与网络管理/chap0x01/images/4-4-2.png)
-![](/Linux系统与网络管理/chap0x01/images/4-4-3.png)
-- 成功以cuc身份登录linux 18.04服务器
-  ![](/Linux系统与网络管理/chap0x01/images/4-4-4.png)
 
 4.在mac os的宿主机利用ssh连接目标机Ubuntu 18.04 server ，并将宿主机中ubuntu-18.04.1-server-amd64.iso镜像远程传送到目标服务器上
 ```bash
@@ -141,21 +131,75 @@ scp cuc@192.168.56.101:/home/cuc/mountdir/cd/custom.iso /Users/cclin/Desktop
 ```
 ![](/Linux系统与网络管理/chap0x01/images/4-14-1.png)
 
-15.使用无人值守iso安装虚拟机
+15.新建虚拟机，使用无人值守iso安装虚拟机
+
+![](/Linux系统与网络管理/chap0x01/images/4-15-1.png)
 
 ### 五、实验结果
 - 无人值守安装
+- ![](/Linux系统与网络管理/chap0x01/images/4-14-1.png)
 
 ### 六、思考问题
 - 官方示例文件preseed.cfg与ubuntu-server-autoinstall.seed对比
 - [ ] 做了哪些修改？
-- [x] 
-- [ ] 用什么「工具」能提高「差异」比对的效率？
-- [x] 
 - [ ] 这些修改的作用是什么？
-- [x] 
+- 1.locales语言设置修改
+  - 支持多种语言环境：美国和中国
+  
+  ![](/Linux系统与网络管理/chap0x01/images/6-1-1.png)
 
+  - 不支持安装语言：
+  
+![](/Linux系统与网络管理/chap0x01/images/6-1-2.png)
 
+- 2.网络设置修改
+   - 网络连接超时设置为5s
+   - dhcp超时时间为5s
+   - 关闭自动设置网络
+   
+   ![](/Linux系统与网络管理/chap0x01/images/6-2-1.png)
+
+   - 配置静态ip，设置ip地址、网络掩码、网关、名字服务器并确认是静态网络，关闭动态配置。
+   - 设置域名服务器主机名与域名
+   - 设置主机名
+   
+   ![](/Linux系统与网络管理/chap0x01/images/6-2-2.png)
+
+- 3.账户设置修改
+   - 配置账户的用户名和密码
+   
+   ![](/Linux系统与网络管理/chap0x01/images/6-3-1.png)
+
+- 4.时钟和时区设置修改
+   - 设置时区为亚洲上海
+   - 关闭自动设置时间
+   
+   ![](/Linux系统与网络管理/chap0x01/images/6-4-1.png)
+
+- 5.分区设置修改
+   - 自动选择使用全部物理空间
+   
+    ![](/Linux系统与网络管理/chap0x01/images/6-5-1.png)
+
+   - 允许LVM使用全部空间
+   - 设置/home, /var, /tmp不同分区
+   
+   ![](/Linux系统与网络管理/chap0x01/images/6-5-2.png)
+
+- 6.Apt启动设置修改
+   - 禁止使用网络镜像资源
+   
+    ![](/Linux系统与网络管理/chap0x01/images/6-6-1.png)
+
+- 7.安装包设置修改
+   - 安装server包
+   - 安装 openssh-server包，禁止自动更新
+   - 设置自动安装安全更新
+    
+   ![](/Linux系统与网络管理/chap0x01/images/6-7-1.png)
+
+- [ ] 用什么「工具」能提高「差异」比对的效率？
+- [x] 可以选择如Subline Text等专业文档工具帮助对比差异，提高效率
 
 ### 七、实验问题
 - [ ] 初始在mac os系统宿主机上使用putty远程传输到Ubuntu目标服务器文件，怀疑可能是putty程序安装的路径与要传输文件的路问题。
@@ -187,7 +231,7 @@ chrom a=rwx preceed
 - 传输成功
 
 - [ ] 在实验过程步骤13，执行save.sh脚本出现问题
-
+ 
 ![](/Linux系统与网络管理/chap0x01/images/QUE-5-1.png)
 
 - [x] 根据提示信息，经过检查后是在save.h设置存在问题修改后解决，save.sh脚本成功运行
