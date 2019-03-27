@@ -7,29 +7,28 @@ Ubuntu 18.04 Server 64bit
 #### 命令篇
 - [三、系统管理](https://asciinema.org/a/4XM43up6tJCj0HoKIFD11NFoQ)
 
-<a href="https://asciinema.org/a/4XM43up6tJCj0HoKIFD11NFoQ" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemmag.png"/></a>
+[![asciicast](https://asciinema.org/a/4XM43up6tJCj0HoKIFD11NFoQ.svg)](https://asciinema.org/a/4XM43up6tJCj0HoKIFD11NFoQ)
 
 - [四、Unit](https://asciinema.org/a/m0OCOgI3Jkp8reHZJxlkF05lM)
 
-<a href="(https://asciinema.org/a/m0OCOgI3Jkp8reHZJxlkF05lM" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemunit.png"/></a>
+[![asciicast](https://asciinema.org/a/m0OCOgI3Jkp8reHZJxlkF05lM.svg)](https://asciinema.org/a/m0OCOgI3Jkp8reHZJxlkF05lM)
 
 - [五、Unit配置文件](https://asciinema.org/a/gpGDTfDBs3kJeWqCtf8u4Iqm9)
 
-<a href="(https://asciinema.org/a/gpGDTfDBs3kJeWqCtf8u4Iqm9" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemunitconfigfiles.png"/></a>
+[![asciicast](https://asciinema.org/a/gpGDTfDBs3kJeWqCtf8u4Iqm9.svg)](https://asciinema.org/a/gpGDTfDBs3kJeWqCtf8u4Iqm9)
 
 - [六、Target](https://asciinema.org/a/jG8xXRQ9aODOEzEGud2gO0km1)
 
-<a href="(https://asciinema.org/a/jG8xXRQ9aODOEzEGud2gO0km1" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemtarget.png"/></a>
+[![asciicast](https://asciinema.org/a/jG8xXRQ9aODOEzEGud2gO0km1.svg)](https://asciinema.org/a/jG8xXRQ9aODOEzEGud2gO0km1)
 
 - [七、日志管理](https://asciinema.org/a/15ZMsMlQkA11qwb9aWb3u1Ram)
 
-<a href="(https://asciinema.org/a/15ZMsMlQkA11qwb9aWb3u1Ram" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemmaglog.png"/></a>
+[![asciicast](https://asciinema.org/a/15ZMsMlQkA11qwb9aWb3u1Ram.svg)](https://asciinema.org/a/15ZMsMlQkA11qwb9aWb3u1Ram)
 
 #### 实战篇
 - [实战训练](https://asciinema.org/a/WntemW6D2y3i4OpH7uZBY322g)
 
-<a href="https://asciinema.org/a/WntemW6D2y3i4OpH7uZBY322g" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/systemactexe.png"/></a>
-
+[![asciicast](https://asciinema.org/a/WntemW6D2y3i4OpH7uZBY322g.svg)](https://asciinema.org/a/WntemW6D2y3i4OpH7uZBY322g)
 
 ### 四、实验自查清单
 - [ ] 如何添加一个用户并使其具备sudo执行程序的权限？
@@ -50,7 +49,7 @@ su commonuser
 # 执行 sudo，具有sudo执行程序权限
 sudo su -
 ```
-<a href="https://asciinema.org/a/fb8HLBEcIRwj2gsBL2wKf7KzV" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/que1.png"/></a>
+[![asciicast](https://asciinema.org/a/fb8HLBEcIRwj2gsBL2wKf7KzV.svg)](https://asciinema.org/a/fb8HLBEcIRwj2gsBL2wKf7KzV)
 
 - [ ] 如何将一个用户(username)添加到一个用户组(usergroup)？ 
 - [x] 命令如下
@@ -62,7 +61,7 @@ sudo adduser usert grouptest
 # 可以查看用户usert的属性，使用 id 命令：
 id usert
 ```
-<a href="https://asciinema.org/a/fCm9rj42IGHIORnfc32BSDI7C" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/que2.png"/></a>
+[![asciicast](https://asciinema.org/a/fCm9rj42IGHIORnfc32BSDI7C.svg)](https://asciinema.org/a/fCm9rj42IGHIORnfc32BSDI7C)
 
 - [ ] 如何查看当前系统的分区表和文件系统详细信息？
 - [x] 命令如下
@@ -74,7 +73,7 @@ cfdisk
 # 查看文件系统详细信息
 df -a
 ```
-<a href="https://asciinema.org/a/mFWlXSmXsyLXAUjP3ggaYSqcB" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/que3.png"/></a>
+[![asciicast](https://asciinema.org/a/mFWlXSmXsyLXAUjP3ggaYSqcB.svg)](https://asciinema.org/a/mFWlXSmXsyLXAUjP3ggaYSqcB)
 
 - [ ] 如何实现开机自动挂载Virtualbox的共享目录分区？
 - [x] virtualbox面板中选定要操作的虚拟机-->设置-->共享文件夹-->添加共享文件夹-->勾选‘固定分配’。
@@ -86,11 +85,14 @@ df -a
 mkdir ~/sharefolder
 # 挂载共享文件夹ShareFolder到新建挂载目录
 sudo mount -t vboxsf ShareFolder ~/sharefolder
-# 打开rc.local文件修改配置文件
-sudo vi /etc/rc.local
-# rc.local删除exit0，添加
-mount -t vboxsf ShareFolder ~/sharefolder
+# 打开fstab文件修改配置文件
+sudo vi /etc/fstab
+# 添加配置信息
+vbshare /home/cuc/sharefolder vboxsf defaults 0 0
+# 重启
+sudo reboot
 ```
+![](/Linux系统与网络管理/chap0x03/images/4-4-2.png)
 
 - [ ] 基于LVM（逻辑分卷管理）的分区如何实现动态扩容和缩减容量？
 - [x] 命令如下
@@ -104,7 +106,7 @@ sudo lvreduce --size -3MB /dev/bogon-vg/root
 # 更改大小3MB 
 sudo lvresize --size +3MB /dev/bogon-vg/root
 ```
-<a href="https://asciinema.org/a/cJSSacAOkEfQFfc9wb3gnCtfq" target="_blank"><img src="Linux系统与网络管理/chap0x03/images/que5.png"/></a>
+[![asciicast](https://asciinema.org/a/cJSSacAOkEfQFfc9wb3gnCtfq.svg)](https://asciinema.org/a/cJSSacAOkEfQFfc9wb3gnCtfq)
 
 - [ ] 如何通过systemd设置实现在网络连通时运行一个指定脚本，在网络断开时运行另一个脚本？
 - [x] 修改NetworkManager.service配置文件的Service区块
@@ -140,6 +142,10 @@ ExecStopPost = scriptb.service
 - 执行`sudo apt-get install nfs-common`，再次查看`ll /sbin/mount*`，此时产生新的文件，再次执行命令`sudo mount -t vboxsf ShareFolder ~/sharefolder`问题未解决
 
 ![](/Linux系统与网络管理/chap0x03/images/QUE-5.png)
+
+- 执行`sudo apt-get install virtualbox-guest-utils`问题得到解决
+
+![](/Linux系统与网络管理/chap0x03/images/QUE-6.png)
 
 ### 六、实验参考
 - [Systemd 入门教程：命令篇 by 阮一峰的网络日志](http://www.ruanyifeng.com/blog/2016/03/systemd-tutorial-commands.html)
