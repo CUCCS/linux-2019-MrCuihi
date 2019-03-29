@@ -33,7 +33,7 @@ Ubuntu 18.04 Server 64bit
 ### 四、实验自查清单
 - [ ] 如何添加一个用户并使其具备sudo执行程序的权限？
 - [x] 命令如下
-```
+```bash
 # 添加一个普通用户commuser
 sudo adduser commuser
 # 切换到用户commuser
@@ -53,7 +53,7 @@ sudo su -
 
 - [ ] 如何将一个用户(username)添加到一个用户组(usergroup)？ 
 - [x] 命令如下
-```
+```bash
 # 创建新用户组grouptest
 sudo groupadd grouptest
 # 创建用户 usert 并将其加入到 groupt 用户组：
@@ -65,7 +65,7 @@ id usert
 
 - [ ] 如何查看当前系统的分区表和文件系统详细信息？
 - [x] 命令如下
-```
+```bash
 #查看当前系统分区表
 sudo fdisk -l
 sudo sfdisk -l
@@ -96,7 +96,7 @@ sudo reboot
 
 - [ ] 基于LVM（逻辑分卷管理）的分区如何实现动态扩容和缩减容量？
 - [x] 命令如下
-```
+```bash
 # 查看逻辑卷信息
 sudo lvdisplay
 # 动态扩容3MB 
@@ -110,7 +110,7 @@ sudo lvresize --size +3MB /dev/bogon-vg/root
 
 - [ ] 如何通过systemd设置实现在网络连通时运行一个指定脚本，在网络断开时运行另一个脚本？
 - [x] 修改NetworkManager.service配置文件的Service区块
-```
+```bash
 # 设置网络联通时运行脚本scripta（假设脚本名）
 ExecStartPost = scripta.service
 # 假设网络断开是运行脚本scriptb
