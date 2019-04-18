@@ -116,9 +116,9 @@ Shell脚本编程
 
 
 ### 六、参考
-[BASH Programming - Introduction HOW-TO](http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html)
-
 [magick](https://www.imagemagick.org/script/convert.php])
+
+[BASH Programming - Introduction HOW-TO](http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html)
 
 [Shell 传递参数](http://www.runoob.com/linux/linux-shell-passing-arguments.html)
 
