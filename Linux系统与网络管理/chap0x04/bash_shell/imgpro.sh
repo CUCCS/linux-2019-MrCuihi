@@ -9,7 +9,7 @@ echo " usage: bash imgpro [Arguments][][][]"
 echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
 echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (please add/use %)"
-echo " -w  [filename.jpeg] [watermark] : Embed a custom watermark (please add/use *.jpeg batch)"
+echo " -w  [filename.jpeg] [watermark] [destination(.jpeg)]: Embed a custom watermark (please add/use *.jpeg batch)"
 echo " -m  [pattern] [replacement] : Rename files based on input batch"
 echo " -c  [source(.png)] [destination(.jpeg)] : convert png/svg to jpeg"
 echo " -h  Output help information"
@@ -128,15 +128,15 @@ function Process()
     
    #Embed a custom watermark (please add/use *.jpg batch)
   elif [ "$1" == "-w" ];then
-       if [ $# == 3 ];then
+       if [ $# == 4 ];then
            $(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
            if [ $? == 1 ];then
               echo "Embedding a custom watermark failed."
               exit 1
             else
               echo "Embedding a custom watermark successfully."
-	      echo "Source: (file $2)"
-	      echo "Destination:(file $3)"
+	      echo "Source: $(file $2)"
+	      echo "Destination:$(file $4)"
               exit 0
             fi
         else
