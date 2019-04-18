@@ -51,7 +51,7 @@ Shell脚本编程
 ![](/Linux系统与网络管理/chap0x04/images/1-3-1.png)
 ![](/Linux系统与网络管理/chap0x04/images/1-3-2.png)
 
-- 支持对图片批量添加自定义文本水印`bash imgpro -w 333.jpeg 123456`
+- 支持对图片批量添加自定义文本水印`bash imgpro -w 366.jpeg 123456 w366.jpeg`
 
 ![](/Linux系统与网络管理/chap0x04/images/1-4-1.png)
 
