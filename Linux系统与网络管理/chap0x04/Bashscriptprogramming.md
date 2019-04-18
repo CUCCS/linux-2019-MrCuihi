@@ -1,7 +1,8 @@
 ### 一、实验名称
 Shell脚本编程
 ### 二、实验环境
-- macOs Mojave 10.14.1
+- virtualbox
+- Ubuntu 18.04 Server 64bit
 - bash:bash-3.2
 ### 三、实验任务
 #### 任务一
