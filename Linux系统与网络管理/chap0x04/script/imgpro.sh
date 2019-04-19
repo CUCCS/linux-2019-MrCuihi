@@ -5,7 +5,8 @@
 function usage()
 {
 echo " IMproved 1.0 (2019 April 2)"
-echo " usage: bash imgpro [Arguments][][][]"
+echo " usage: bash imgpro [Arguments][][][] "
+echo " Be sure you have installed ImageMagick, or input 'sudo apt install imagemagick' to install."
 echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
 echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (please add/use %)"
@@ -26,7 +27,7 @@ function Process()
            echo "No such file"
            exit 1
         else
-	   if [ `file --mime-type -b $2` == "image/png" ];then
+	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $3` == "image/png" ];then
               #convert successfully
 	      $(convert $2 $3)
               if [ $? == 1 ];then
