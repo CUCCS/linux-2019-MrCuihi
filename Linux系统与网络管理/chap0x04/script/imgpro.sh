@@ -53,15 +53,13 @@ function Process()
   # Rename files based on input batch
   elif [ "$1" == "-m" ];then
       if [ $# == 4 ];then
-             totalnameo="$(basename "$2")"
-	     filenameo="${totalnameo%.*}"
-	     #totalnamet="$(basename "$3")"
-	     #filenamet="${totalnamet%.*}"
-	     suffix="${totalnameo##*.}"	
+             totalnameo=$(basename $2)
+	     filenameo=${totalnameo%.*}
+	     suffix=${totalnameo##*.}	
         if [ $4 == "--prefix" ];then
 	    $(cp -- "$2" "$3""$filename"."$suffix")
-	elif [ $4== "--suffix" ];then
-	    $(cp -- $2 $filename$3.$suffix)
+	elif [ $4 == "--suffix" ];then
+	    $(cp -- "$2" "$filename""$3".$suffix)
 	fi
             #$(rename 's/'$filenameo'/'$filenamet'/' *)
         if [ $? == 1 ];then
