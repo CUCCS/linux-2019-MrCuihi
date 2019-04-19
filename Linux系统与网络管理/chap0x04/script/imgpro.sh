@@ -10,7 +10,7 @@ echo " Be sure you have installed ImageMagick, or input 'sudo apt install imagem
 echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
 echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (use %)"
-echo " -w  [filename.jpeg] [watermark] :Embed a custom watermark (use *.jpeg batch)"
+echo " -w  [filename.jpeg] [watermark] [destination.jpeg]:Embed a custom watermark (use *.jpeg batch)"
 echo " -m  [sourcename] [replacement] [pattern]: Rename files based on input batch(pattern:*sourcename/sourcename*)"
 echo " -c  [source(.png)] [destination(.jpeg)] : convert png/svg to jpeg"
 echo " -h  Output help information"
@@ -27,8 +27,7 @@ function Process()
            echo "No such file"
            exit 1
         else
-	   echo "`file --mime-type -b $2`"
-	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $2` == "image/svg" ];then
+	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $2` == "image/svg" -o `file --mime-type -b $2` == "image/svg+xml" ];then
               #convert successfully
 	      $(convert $2 $3)
               if [ $? == 1 ];then
@@ -41,6 +40,7 @@ function Process()
                 exit 0
               fi
 	     else
+	        echo "The type of the image :`file --mime-type -b $2`"
                 echo "Please provide png/svg pictures."
 	     fi
          fi
@@ -131,15 +131,17 @@ function Process()
     
    #Embed a custom watermark (please add/use *.jpg batch)
   elif [ "$1" == "-w" ];then
-       if [ $# == 3 ];then
-           wimg=$(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
+       if [ $# == 4 ];then
+          
+           #wimg=$(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
+	   $(convert $2 -fill red -pointsize 60 -draw "text 60,60 $3" $4 )
            if [ $? == 1 ];then
               echo "Embedding a custom watermark failed."
               exit 1
             else
               echo "Embedding a custom watermark successfully."
 	      echo "Source: $(file $2)"
-	      echo "Destination:$(file $wimg)"
+	      echo "Destination:$(file $4)"
               exit 0
             fi
         else
