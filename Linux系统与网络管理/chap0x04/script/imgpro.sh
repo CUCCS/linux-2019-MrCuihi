@@ -11,11 +11,7 @@ echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
 echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (use %)"
 echo " -w  [filename.jpeg] [watermark] [destination.jpeg]:Embed a custom watermark (use *.jpeg batch)"
-<<<<<<< HEAD
-echo " -m  [sourcename] [replacement]: Rename files based on input batch(pattern:*sourcename/sourcename*)"
-=======
-echo " -m  [sourcename] [replacement] [--prefix|--suffix]: Rename files based on input batch"
->>>>>>> 3f99918077f41d67521f067c15713300128dd549
+echo " -m  [sourcename] [replacement] [--prefix|--suffix] : Rename files based on input batch(batch add prefix or suffix without changing the type)"
 echo " -c  [source(.png)] [destination(.jpeg)] : convert png/svg to jpeg"
 echo " -h  Output help information"
 
@@ -31,9 +27,9 @@ function Process()
            echo "No such file"
            exit 1
         else
-	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $2` == "image/svg" -o `file --mime-type -b $2` == "image/svg+xml" ];then
+           if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $2` == "image/svg" -o `file --mime-type -b $2` == "image/svg+xml" ];then
               #convert successfully
-	      $(convert $2 $3)
+              $(convert $2 $3)
               if [ $? == 1 ];then
                 echo "Conversion failed."
                 exit 1
@@ -43,41 +39,35 @@ function Process()
                 echo "Destination: $(file $3)" 
                 exit 0
               fi
-	     else
-	        echo "The type of the image :`file --mime-type -b $2`"
-                echo "Please provide png/svg pictures."
-	     fi
-         fi
+           else
+              echo "The type of the image :`file --mime-type -b $2`"
+              echo "Please provide png/svg pictures."
+           fi
+        fi
       else
          #Eorror , output usage information
          echo "Wrong arguments!"
          usage
-      fi
+    fi
       
   # Rename files based on input batch
   elif [ "$1" == "-m" ];then
-<<<<<<< HEAD
-      if [ $# == 3 ];then
-        $(rename 's/'$2'/'$3'/' *)
-=======
       if [ $# == 4 ];then
-             totalname="$(basename "$img")"
-	     filename="${totalname%.*}"
-	     suffix="${totalname##*.}"	
+        totalnameo=$(basename $2)
+        filenameo=${totalnameo%.*}
+        suffix=${totalnameo##*.} 
         if [ $4 == "--prefix" ];then
-	    $(cp -- "$2" "$3""$filename"."$suffix")
-	elif [ $4== "--suffix" ];then
-	    $(cp -- $2 $filename$3.$suffix)
-	fi
-        #$(rename 's/'$2'/'$3'/' *)
->>>>>>> 3f99918077f41d67521f067c15713300128dd549
+           $(cp -- "$2" "$3""$filename"."$suffix")
+        elif [ $4 == "--suffix" ];then
+           $(cp -- "$2" "$filename""$3".$suffix)
+        fi
+            #$(rename 's/'$filenameo'/'$filenamet'/' *)
         if [ $? == 1 ];then
            echo "Batch rename file failed."
            exit 1
         else
            echo "Batch renamed file successfully."
-	   echo "Source: $(file $2)"
-	   echo "Destination: $(file $3)"
+           echo "Source: $(file $2)"
            exit 0
         fi
       #Eorror , output usage information
@@ -148,16 +138,14 @@ function Process()
    #Embed a custom watermark (please add/use *.jpg batch)
   elif [ "$1" == "-w" ];then
        if [ $# == 4 ];then
-          
-           #wimg=$(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
-	   $(convert $2 -fill red -pointsize 60 -draw "text 60,60 $3" $4 )
+           $(convert $2 -fill red -pointsize 60 -draw "text 60,60 $3" $4 )
            if [ $? == 1 ];then
               echo "Embedding a custom watermark failed."
               exit 1
             else
               echo "Embedding a custom watermark successfully."
-	      echo "Source: $(file $2)"
-	      echo "Destination:$(file $4)"
+              echo "Source: $(file $2)"
+              echo "Destination:$(file $4)"
               exit 0
             fi
         else
