@@ -99,8 +99,8 @@ function countname()
      		fi
  	done
 	
-	longestname=$(awk -F '\t' '{if (length($9)=='$longestnamelen') {print $9} }' worldcupplayerinfo.tsv)
-	shortestname=$(awk -F '\t' '{if (length($9)=='$shortestnamelen') {print $9} }' worldcupplayerinfo.tsv)
+	longestname=$(awk -F '\t' '{if (length($9)=='$longestnamelen') {print $9} }' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
+	shortestname=$(awk -F '\t' '{if (length($9)=='$shortestnamelen') {print $9} }' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
        
        	echo "===World Cup athletes the length of name statistics==="
         echo "The longest name : $longestname ; The longest name length : $longestnamelen"
@@ -125,11 +125,10 @@ function counttage()
         total_sum=$[$total_sum+1]
         if [ "$a" -gt $oldest ];then
            oldest=$a
-           oldestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' worldcupplayerinfo.tsv)
-        
+           oldestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
         elif [ "$a" -lt $youngest ];then
            youngest=$a
-           youngestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' worldcupplayerinfo.tsv)
+           youngestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
         fi
      fi
     done
