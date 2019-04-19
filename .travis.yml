@@ -21,8 +21,8 @@ script:
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -q 900 Linux系统与网络管理/chap0x04/images/car.jpeg dcar.jpeg
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 50% Linux系统与网络管理/chap0x04/images/o666.png ro666.png
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 256x256 Linux系统与网络管理/chap0x04/images/car.jpeg rcar.jpeg
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/car.jpeg thisisfun 
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/o666.png thisisfun 
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/car.jpeg thisisfun wcar.jpeg
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/o666.png thisisfun wo666.png
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car mmmcar car*
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/.jpeg .png *.jpeg
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/o666.png co666.jpeg  
