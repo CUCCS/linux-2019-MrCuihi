@@ -52,7 +52,7 @@ function Process()
       
   # Rename files based on input batch
   elif [ "$1" == "-m" ];then
-      if [ $# == 4 ];then
+      if [ $# == 3 ];then
         $(rename 's/'$2'/'$3'/' *)
         if [ $? == 1 ];then
            echo "Batch rename file failed."
