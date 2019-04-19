@@ -129,15 +129,15 @@ function Process()
     
    #Embed a custom watermark (please add/use *.jpg batch)
   elif [ "$1" == "-w" ];then
-       if [ $# == 4 ];then
-           $(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
+       if [ $# == 3 ];then
+           wimg=$(mogrify -gravity SouthEast -fill black -draw 'text 0,0 '$3'' $2)
            if [ $? == 1 ];then
               echo "Embedding a custom watermark failed."
               exit 1
             else
               echo "Embedding a custom watermark successfully."
 	      echo "Source: $(file $2)"
-	      echo "Destination:$(file $4)"
+	      echo "Destination:$(file $?)"
               exit 0
             fi
         else
