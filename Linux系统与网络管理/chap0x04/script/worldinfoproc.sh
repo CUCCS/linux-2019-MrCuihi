@@ -19,7 +19,7 @@ echo " -h  Output help information."
 #Count the number and percentage of players in different age ranges (under 20, [20-30], over 30) 
 function countrage()
 {
-    age=$(awk -F '\t' '{print $6}' worldcupplayerinfo.tsv)
+    age=$(awk -F '\t' '{print $6}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
     sum_agelt20=0
     sum_ageb20to30=0
     sum_agegt30=0
@@ -60,7 +60,7 @@ function countrage()
 #Count the number and percentage of players on different positions.
 function countposi()
 {
-  positions=$(awk -F '\t' '{print $5}' worldcupplayerinfo.tsv) 
+  positions=$(awk -F '\t' '{print $5}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv) 
   declare -A poscountdic
   total_sum=0
   for pos in $positions
@@ -86,7 +86,7 @@ function countposi()
 #Count the longest player, the shortest player.
 function countname()
 {
-        namelength=$( awk -F '\t' '{print length($9)}' worldcupplayerinfo.tsv)
+        namelength=$( awk -F '\t' '{print length($9)}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
 	longestnamelen=0
 	shortestnamelen=103
 
@@ -99,8 +99,8 @@ function countname()
      		fi
  	done
 	
-	longestname=$(awk -F '\t' '{if (length($9)=='$longestnamelen') {print $9} }' worldcupplayerinfo.tsv)
-	shortestname=$(awk -F '\t' '{if (length($9)=='$shortestnamelen') {print $9} }' worldcupplayerinfo.tsv)
+	longestname=$(awk -F '\t' '{if (length($9)=='$longestnamelen') {print $9} }' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
+	shortestname=$(awk -F '\t' '{if (length($9)=='$shortestnamelen') {print $9} }' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
        
        	echo "===World Cup athletes the length of name statistics==="
         echo "The longest name : $longestname ; The longest name length : $longestnamelen"
@@ -111,7 +111,7 @@ function countname()
 #Count the oldest player, the youngest player.
 function counttage()
 {
-   age=$(awk -F '\t' '{print $6}' worldcupplayerinfo.tsv)
+   age=$(awk -F '\t' '{print $6}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
    oldest=0
    youngest=103
    oldestname=''
@@ -125,11 +125,10 @@ function counttage()
         total_sum=$[$total_sum+1]
         if [ "$a" -gt $oldest ];then
            oldest=$a
-           oldestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' worldcupplayerinfo.tsv)
-        
+           oldestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
         elif [ "$a" -lt $youngest ];then
            youngest=$a
-           youngestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' worldcupplayerinfo.tsv)
+           youngestname=$(awk -F '\t' 'NR=='$[$total_sum +1]' {print $9}' Linux系统与网络管理/chap0x04/script/worldcupplayerinfo.tsv)
         fi
      fi
     done
