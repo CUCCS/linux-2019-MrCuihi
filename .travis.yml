@@ -18,11 +18,21 @@ before_install:
 script:
   - bash test.sh
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -h
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -q 900 Linux系统与网络管理/chap0x04/images/car.jpeg dcar.jpeg
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 1280*800 Linux系统与网络管理/chap0x04/images/o666.png ro666.png
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 1280*800 Linux系统与网络管理/chap0x04/images/car.jpeg rcar.png
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/car.jpeg thisisfun wcar.jpeg
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/o666.png thisisfun wo666.png
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car.jpeg mcar.jpeg
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/o666.png co666.jpeg  
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/text.svg ctext.jpeg 
+  
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -h
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -rage
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -posi
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -name
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -tage
+  
   - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -h
   - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -h
   - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -th 
@@ -34,7 +44,7 @@ script:
 
 after_script:
   - /usr/bin/shellcheck test.sh
-  - /usr/bin/shellcheck chap0x04/script/*.sh
+  - /usr/bin/shellcheck Linux系统与网络管理/chap0x04/script/*.sh
 
 after_failure:
   - id
