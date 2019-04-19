@@ -25,7 +25,7 @@ script:
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/o666.png thisisfun wo666.png
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car.jpeg mmm --prefix
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car.jpeg nnn --suffix
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/o666.png co666.jpeg  
+  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/366.png c366.jpeg  
   - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/gen.svg cgen.jpeg 
   
   - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -h
