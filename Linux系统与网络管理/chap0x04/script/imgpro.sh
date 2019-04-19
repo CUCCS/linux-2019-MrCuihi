@@ -9,8 +9,8 @@ echo " usage: bash imgpro [Arguments][][][] "
 echo " Be sure you have installed ImageMagick, or input 'sudo apt install imagemagick' to install."
 echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
-echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (please add/use %)"
-echo " -w  [filename.jpeg] [watermark] [destination(.jpeg)]: Embed a custom watermark (please add/use *.jpeg batch)"
+echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (use %)"
+echo " -w  [filename.jpeg] [watermark] :Embed a custom watermark (use *.jpeg batch)"
 echo " -m  [pattern] [replacement] : Rename files based on input batch"
 echo " -c  [source(.png)] [destination(.jpeg)] : convert png/svg to jpeg"
 echo " -h  Output help information"
@@ -27,7 +27,7 @@ function Process()
            echo "No such file"
            exit 1
         else
-	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $3` == "image/png" ];then
+	   if [ `file --mime-type -b $2` == "image/png" -o `file --mime-type -b $2` == "image/svg" ];then
               #convert successfully
 	      $(convert $2 $3)
               if [ $? == 1 ];then
@@ -137,7 +137,7 @@ function Process()
             else
               echo "Embedding a custom watermark successfully."
 	      echo "Source: $(file $2)"
-	      echo "Destination:$(file $?)"
+	      echo "Destination:$(file $wimg)"
               exit 0
             fi
         else
