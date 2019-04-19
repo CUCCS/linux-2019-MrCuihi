@@ -11,7 +11,7 @@ echo " Arguments: "
 echo " -q  [quality] [source.jpeg] [destination.jpeg] : Image quality compression for jpeg format images"
 echo " -r  [%|(size)x(size)] [source.jpg|png] [destination.jpeg|png] :Compress images while maintaining the same height and width (use %)"
 echo " -w  [filename.jpeg] [watermark] [destination.jpeg]:Embed a custom watermark (use *.jpeg batch)"
-echo " -m  [sourcename] [replacement] [pattern]: Rename files based on input batch(pattern:*sourcename/sourcename*)"
+echo " -m  [sourcename] [replacement]: Rename files based on input batch(pattern:*sourcename/sourcename*)"
 echo " -c  [source(.png)] [destination(.jpeg)] : convert png/svg to jpeg"
 echo " -h  Output help information"
 
@@ -53,8 +53,7 @@ function Process()
   # Rename files based on input batch
   elif [ "$1" == "-m" ];then
       if [ $# == 4 ];then
-        #$(rename s'/'$2'/'$3'/' *)
-	$(rename $2 $3 $4)
+        $(rename 's/'$2'/'$3'/' *)
         if [ $? == 1 ];then
            echo "Batch rename file failed."
            exit 1
