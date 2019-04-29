@@ -4,8 +4,8 @@
 #### 基本要求
 
 - 在一台主机（虚拟机）上同时配置Nginx和VeryNginx
-- VeryNginx作为本次实验的Web App的反向代理服务器和WAF
-- PHP-FPM进程的反向代理配置在nginx服务器上，VeryNginx服务器不直接配置Web站点服务
+    - VeryNginx作为本次实验的Web App的反向代理服务器和WAF
+    - PHP-FPM进程的反向代理配置在nginx服务器上，VeryNginx服务器不直接配置Web站点服务
 - 使用Wordpress搭建的站点对外提供访问的地址为： https://wp.sec.cuc.edu.cn 和 http://wp.sec.cuc.edu.cn
 - 使用Damn Vulnerable Web Application (DVWA)搭建的站点对外提供访问的地址为： http://dvwa.sec.cuc.edu.cn
 
@@ -20,32 +20,32 @@
 
 - VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
 - 通过定制VeryNginx的访问控制策略规则实现：
-- 限制DVWA站点的单IP访问速率为每秒请求数 < 50
-- 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
-- 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
-- 禁止curl访问
+    - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
+    - 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
+    - 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
+    - 禁止curl访问
 
 ### 三、实验环境
 - 实验环境服务器ip地址说明：由于实验时间跨度交到，分别多次进行，开启服务器顺序不同，所以ip地址设置并不唯一不变，但三个服务器均配置NAT与hostonly：196.168.56.*/24两块网卡
 - 服务器×3
--  Ubuntu 16.04-1
-- Ubuntu 16.04 desktop 64bit
-- host only，NAT
-- nginx/1.10.0
-- verynginx
-- ubuntu 16.04-2
-- Ubuntu 16.04 desktop 64bit
-- host only,NAT
-- wordpress 4.
-- nginx
-- ubuntu 16.04-3
-- Ubuntu 16.04 desktop 64bit
-- host only,NAT
-- dvwa 1.10
-- nginx
+  -  Ubuntu 16.04-1
+     - Ubuntu 16.04 desktop 64bit
+     - host only，NAT
+     - nginx/1.10.0
+     - verynginx
+  -  ubuntu 16.04-2
+      - Ubuntu 16.04 desktop 64bit
+      - host only,NAT
+      - wordpress 4.
+      - nginx
+  -  ubuntu 16.04-3
+     - Ubuntu 16.04 desktop 64bit
+     - host only,NAT
+     - dvwa 1.10
+     - nginx
 - 客户端×2
-- macOS Mojave 10.14.4
-- ubuntu16.04-client（PD虚拟机内部）
+   - macOS Mojave 10.14.4
+   - ubuntu16.04-client（PD虚拟机内部）
 
 ### 四、实验过程
 #### (一) 安装配置环境
@@ -150,7 +150,7 @@ FLUSH PRIVILEGES;
 EXIT;
 
 #配置文件config.inc.php
-sudo vim /etc/php/7.0/fpm/php.ini
+ sudo vim /etc/php/7.0/fpm/php.ini
 # 允许远程文件包含（RFI）
 allow_url_include = On
 #手动添加（如果PHP <= v5.4）允许SQL注入（SQLi）
@@ -173,28 +173,28 @@ sudo systemctl restart nginx
 - 执行`sudo vim /etc/nginx/sites-available/default`修改nginx配置文件，为dvwa配置服务块
 ```bash
 server {
-listen 80 default_server; 
-listen [::]:80 default_server; 
-root /var/www/html/dvwa;
-
-index index.php index.php index.nginx-debian.php;
-server_name dvwa.sec.cuc.edu.cn;
-
-location / {
-try_files $uri $uri/ =404;
-}
-
-#配置php-fpm
-location ~ \.php$ {
-include snippets/fastcgi-php.conf;
-fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-} 
-
-location ~ /\.ht {
-deny all;
-
-}
-
+    listen 80 default_server; 
+    listen [::]:80 default_server; 
+    root /var/www/html/dvwa;
+    
+    index index.php index.php index.nginx-debian.php;
+    server_name dvwa.sec.cuc.edu.cn;
+    
+    location / {
+            try_files $uri $uri/ =404;
+    }
+    
+     #配置php-fpm
+    location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    } 
+    
+    location ~ /\.ht {
+    deny all;
+       
+    }
+    
 }
 
 # 重启MySQL和nginx
@@ -264,62 +264,62 @@ add_header X-XSS-Protection "1; mode=block";
 
 #/etc/nginx/sites-available/default
 server {
-listen 80 ;  # 使用80端口监听
-listen [::]:80 ; 
-root /var/www/html/wordpress;
-index index.php index.php index.nginx-debian.php; # php优先
-server_name wp.sec.cuc.edu.cn;
-location / {
-#try_files $uri $uri/ =404;
-#不是将404错误作为默认选项返回，而是index.php使用请求参数将控制传递给 文件
-try_files $uri $uri/ /index.php$is_args$args;
+    listen 80 ;  # 使用80端口监听
+    listen [::]:80 ; 
+    root /var/www/html/wordpress;
+    index index.php index.php index.nginx-debian.php; # php优先
+    server_name wp.sec.cuc.edu.cn;
+    location / {
+     #try_files $uri $uri/ =404;
+     #不是将404错误作为默认选项返回，而是index.php使用请求参数将控制传递给 文件
+     try_files $uri $uri/ /index.php$is_args$args;
+    }
+     location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.2-fpm.sock;
+    }
+     #以下为需要添加的location 
+     location = /favicon.ico {
+         log_not_found off; access_log off; 
+         
+     } 
+     location = /robots.txt { 
+        log_not_found off; 
+        access_log off; allow all; 
+         
+     } 
+     location ~*\.(css|gif|ico|jpeg|jpg|js|png)$ { 
+     
+         expires max; log_not_found off; 
+         
+     }
+  }
+  server {
+    listen 80;
+    listen [::]:80;
+
+    server_name wp.sec.cuc.edu.cn;
+
+    return 302 https://$server_name$request_uri;
+  }
+  server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+    
+    root /var/www/html/wordpress;
+    index index.php index.php index.nginx-debian.php;
+    server_name wp.sec.cuc.edu.cn;
+ 
+    location ~ \.php$ {
+            include snippets/fastcgi-php.conf;
+            fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+    }
+    
 }
-location ~ \.php$ {
-include snippets/fastcgi-php.conf;
-fastcgi_pass unix:/run/php/php7.2-fpm.sock;
-}
-#以下为需要添加的location 
-location = /favicon.ico {
-log_not_found off; access_log off; 
-
-} 
-location = /robots.txt { 
-log_not_found off; 
-access_log off; allow all; 
-
-} 
-location ~*\.(css|gif|ico|jpeg|jpg|js|png)$ { 
-
-expires max; log_not_found off; 
-
-}
-}
-server {
-listen 80;
-listen [::]:80;
-
-server_name wp.sec.cuc.edu.cn;
-
-return 302 https://$server_name$request_uri;
-}
-server {
-listen 443 ssl;
-listen [::]:443 ssl;
-
-include snippets/self-signed.conf;
-include snippets/ssl-params.conf;
-
-root /var/www/html/wordpress;
-index index.php index.php index.nginx-debian.php;
-server_name wp.sec.cuc.edu.cn;
-
-location ~ \.php$ {
-include snippets/fastcgi-php.conf;
-fastcgi_pass unix:/run/php/php7.0-fpm.sock;
-}
-
-}
-
+     
 # 重启MySQL和nginx
 sudo nginx -t
 sudo systemctl restart mysql
@@ -335,20 +335,20 @@ sudo systemctl restart nginx
 ![](/Linux系统与网络管理/chap0x05/images/3-8-1.png)
 
 9. 执行`sudo vim /var/www/html/wp-config.php`进行url relocate相关配置
-```bash
+ ```bash
 # After the "define" statements (just before the comment line that says "That's all, stop editing!"), insert a new line, and type: 
 define( 'RELOCATE', true );
 
 #At the bottom add
 if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
-if ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF']) )
-$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], "", $_SERVER['PHP_SELF'] );
+	if ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF']) )
+		$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], "", $_SERVER['PHP_SELF'] );
 
-$url = dirname( set_url_scheme( 'http://' .  $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ) );
-if ( $url != get_option( 'siteurl' ) )
-update_option( 'siteurl', $url );
+	$url = dirname( set_url_scheme( 'http://' .  $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ) );
+	if ( $url != get_option( 'siteurl' ) )
+		update_option( 'siteurl', $url );
 } 
-```
+ ```
 
 10. macOS Mojave客户机浏览器分别访问`http://wp.sec.cuc.edu.cn`与`https://wp.sec.cuc.edu.cn`（后续实验并未实现通过verynginx代理访问`https://wp.sec.cuc.edu.cn`），进行注册登录。
 - `http://wp.sec.cuc.edu.cn`访问成功
@@ -376,38 +376,39 @@ update_option( 'siteurl', $url );
 #### 基本要求
 
 - [ ] 在一台主机（虚拟机）上同时配置Nginx和VeryNginx
-- [ ] VeryNginx作为本次实验的Web App的反向代理服务器和WAF
-- [x] ubuntu16.04-1等配置
-- ubuntu16.04-1、ubuntu16.04-client、macOS-client`vim /etc/hosts`配置hosts
+    - [ ] VeryNginx作为本次实验的Web App的反向代理服务器和WAF
+    - [x] ubuntu16.04-1等配置
+      - ubuntu16.04-1、ubuntu16.04-client、macOS-client`vim /etc/hosts`配置hosts
 
-![](/Linux系统与网络管理/chap0x05/images/ubuntu1_hosts.png)
-![](/Linux系统与网络管理/chap0x05/images/ubuntuc_hosts.png)
-![](/Linux系统与网络管理/chap0x05/images/ubuntum_hosts.png)
 
-- Matcher
+    ![](/Linux系统与网络管理/chap0x05/images/ubuntu1_hosts.png)
+    ![](/Linux系统与网络管理/chap0x05/images/ubuntuc_hosts.png)
+    ![](/Linux系统与网络管理/chap0x05/images/ubuntum_hosts.png)
 
-![](/Linux系统与网络管理/chap0x05/images/basic_matcher.png)
+      - Matcher
 
-- Up Stream,Proxy Pass
+    ![](/Linux系统与网络管理/chap0x05/images/basic_matcher.png)
 
-![](/Linux系统与网络管理/chap0x05/images/proxypass.png)
+      - Up Stream,Proxy Pass
 
-- 结果：Ubuntu16.04-1、macOS-client分别访问`http://dvwa.sec.cuc.edu.cn`,`http://wp.sec.cuc.edu.cn`
+    ![](/Linux系统与网络管理/chap0x05/images/proxypass.png)
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_proxy.png)
-![](/Linux系统与网络管理/chap0x05/images/wp_proxy.png)
-![](/Linux系统与网络管理/chap0x05/images/mdvwa_proxy.png)
-![](/Linux系统与网络管理/chap0x05/images/mwp_proxy.png)
+      - 结果：Ubuntu16.04-1、macOS-client分别访问`http://dvwa.sec.cuc.edu.cn`,`http://wp.sec.cuc.edu.cn`
 
-- [ ] PHP-FPM进程的反向代理配置在nginx服务器上，VeryNginx服务器不直接配置Web站点服务
-- [x] wordpress和dvwa在nginx上的配置文件中写入: 
-```bash
-location ~ \.php$ {
-include snippets/fastcgi-php.conf;
-fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-}
-```
-![](/Linux系统与网络管理/chap0x05/images/phpfpmvernginx.png)
+    ![](/Linux系统与网络管理/chap0x05/images/dvwa_proxy.png)
+    ![](/Linux系统与网络管理/chap0x05/images/wp_proxy.png)
+    ![](/Linux系统与网络管理/chap0x05/images/mdvwa_proxy.png)
+    ![](/Linux系统与网络管理/chap0x05/images/mwp_proxy.png)
+
+ - [ ] PHP-FPM进程的反向代理配置在nginx服务器上，VeryNginx服务器不直接配置Web站点服务
+ - [x] wordpress和dvwa在nginx上的配置文件中写入: 
+    ```bash
+    location ~ \.php$ {
+       include snippets/fastcgi-php.conf;
+       fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+    }
+    ```
+     ![](/Linux系统与网络管理/chap0x05/images/phpfpmvernginx.png)
 
 - [ ] 使用Wordpress搭建的站点对外提供访问的地址为：  http://wp.sec.cuc.edu.cn
 - [x] 客户机macOS Mojave浏览器访问`http://wp.sec.cuc.edu.cn`成功通过该url登录
@@ -425,178 +426,178 @@ fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
 
 - [ ] 使用IP地址方式均无法访问上述任意站点，并向访客展示自定义的友好错误提示信息页面-1
 - [x] ubuntu16.04-1配置
-- Matcher
+   - Matcher
 
-![](/Linux系统与网络管理/chap0x05/images/ip_disabled.png)
+     ![](/Linux系统与网络管理/chap0x05/images/ip_disabled.png)
 
-- Response
+   - Response
 
-![](/Linux系统与网络管理/chap0x05/images/ip_response.png)
+     ![](/Linux系统与网络管理/chap0x05/images/ip_response.png)
 
-- Filter
+   - Filter
 
-![](/Linux系统与网络管理/chap0x05/images/ip_filter.png)
+     ![](/Linux系统与网络管理/chap0x05/images/ip_filter.png)
 
-- 结果
+   - 结果
 
-![](/Linux系统与网络管理/chap0x05/images/ip_dissucceed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/ip_dissucceed.png)
 
 - [ ] Damn Vulnerable Web Application (DVWA)只允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-2
 - [x] ubuntu16.04-1配置:将ubuntu16.04-client ip：`192.168.56.102`列入白名单
-- Matcher
+   - Matcher
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_wallowed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_wallowed.png)
 
-- Response
+   - Response
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_wresponse.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_wresponse.png)
 
-- Filter
+   - Filter
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_wfilter.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_wfilter.png)
 
-- 结果：macOS(192.168.56.101)与ubuntu16.04-client(192.168.56.102/10)分别访问`dvwa.sec.cuc.edu.cn`
+   - 结果：macOS(192.168.56.101)与ubuntu16.04-client(192.168.56.102/10)分别访问`dvwa.sec.cuc.edu.cn`
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_wsucceed.png)
-![](/Linux系统与网络管理/chap0x05/images/dvwa_mwsucceed.png)
-![](/Linux系统与网络管理/chap0x05/images/dvwa_wsucceed1.png)
-
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_wsucceed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_mwsucceed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_wsucceed1.png)
 
 - [ ] 在不升级Wordpress版本的情况下，通过定制VeryNginx的访问控制策略规则，热修复WordPress < 4.7.1 - Username Enumeration
 - [x] ubuntu16.04-1配置[`访问/wp-json/wp/v2/users/可以获取wordpress用户信息的json数据，禁止访问·`wp.sec.cuc.edu.cn`站点的/wp-json/wp/v2/users/路径`](https://github.com/CUCCS/linux/blob/master/2017-1/zjy/exp5/exp5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)
 
-- Matcher
+   - Matcher
 
-![](/Linux系统与网络管理/chap0x05/images/wp_uedisabled.png)
+     ![](/Linux系统与网络管理/chap0x05/images/wp_uedisabled.png)
 
-- Filter
+   - Filter
 
-![](/Linux系统与网络管理/chap0x05/images/wp_uefilter.png)
+     ![](/Linux系统与网络管理/chap0x05/images/wp_uefilter.png)
 
-- 结果：ubuntu16.04-client访问`wp.sec.cuc.edu.cn/wp-json/wp/v2/users`
-- 未设置过滤规则之前
+   - 结果：ubuntu16.04-client访问`wp.sec.cuc.edu.cn/wp-json/wp/v2/users`
+     - 未设置过滤规则之前
 
-![](/Linux系统与网络管理/chap0x05/images/wp_uefailed.png)     
+     ![](/Linux系统与网络管理/chap0x05/images/wp_uefailed.png)     
 
-- 设置过滤规则后
+     - 设置过滤规则后
 
-![](/Linux系统与网络管理/chap0x05/images/wp_uesucceed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/wp_uesucceed.png)
 
 
 - [ ] 通过配置VeryNginx的Filter规则实现对Damn Vulnerable Web Application (DVWA)的SQL注入实验在低安全等级条件下进行防护
 - [x] ubuntu16.04-1、ubuntu16.04-3配置
-- ubuntu16.04-3将dvwa设置为低安全防护等级
+   - ubuntu16.04-3将dvwa设置为低安全防护等级
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_setlowsecurity.png)
+      ![](/Linux系统与网络管理/chap0x05/images/dvwa_setlowsecurity.png)
 
--  SQL 注入
+   - SQL 注入
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_setlowsecuritysql.png)  
+      ![](/Linux系统与网络管理/chap0x05/images/dvwa_setlowsecuritysql.png)  
 
-- ubuntu16.04-3 Matcher
+   - ubuntu16.04-3 Matcher
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisabled.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisabled.png)
 
-- ubuntu16.04-3 Response
+   - ubuntu16.04-3 Response
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldissponse.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldissponse.png)
 
-- ubuntu16.04-3 Filter
+   - ubuntu16.04-3 Filter
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisfilter.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisfilter.png)
 
-- 结果:ubuntu16.04-3 dvwa页面再次尝试sql注入
+   - 结果:ubuntu16.04-3 dvwa页面再次尝试sql注入
 
-![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisucceed.png)
+     ![](/Linux系统与网络管理/chap0x05/images/dvwa_sqldisucceed.png)
 
 #### VeryNginx配置要求
 
 - [ ] VeryNginx的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-3
 - [ ] ubuntu16.04-1配置
-- Matcher
+   - Matcher
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxwhitematcher.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxwhitematcher.png)
 
-- Response
+   - Response
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxwhitere.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxwhitere.png)
 
-- Filter
+   - Filter
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxwhitefilter.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxwhitefilter.png)
 
 
-- 未位于白名单的ip地址为`192.168.56.104`的ubuntu16.04-client和macos不可以访问
+   - 未位于白名单的ip地址为`192.168.56.104`的ubuntu16.04-client和macos不可以访问
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxwhite.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxwhite.png)
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxwhite1.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxwhite1.png)
 
-- 未位于白名单的ubuntu16.04-1`192.168.56.104`可以访问
+   - 未位于白名单的ubuntu16.04-1`192.168.56.104`可以访问
 
-![](/Linux系统与网络管理/chap0x05/images/verynginxnwhite.png)
+     ![](/Linux系统与网络管理/chap0x05/images/verynginxnwhite.png)
 
 - [ ] 通过定制VeryNginx的访问控制策略规则实现：
-- [ ] 限制DVWA站点的单IP访问速率为每秒请求数 < 50
-- [ ] 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
-- [ ] 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
-- [x] ubuntu16.04-1配置
-- Frequency Limit
+    - [ ] 限制DVWA站点的单IP访问速率为每秒请求数 < 50
+    - [ ] 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
+    - [ ] 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
+    - [x] ubuntu16.04-1配置
+      - Frequency Limit
 
-![](/Linux系统与网络管理/chap0x05/images/frequencylimit.png)
+       ![](/Linux系统与网络管理/chap0x05/images/frequencylimit.png)
 
-- Response
+      - Response
 
-![](/Linux系统与网络管理/chap0x05/images/frequencylimitRE.png)
+       ![](/Linux系统与网络管理/chap0x05/images/frequencylimitRE.png)
 
-- macOS Mojave编写脚本访问`http://dvwa.sec.cuc.edu.cn`
-```bash
-#!/bin/bash
-# dvwa_frequencytest.sh
-count=0
-while [ $count -lt 53 ]
-do
-echo "Frequency : $count"
-curl -v http://dvwa.sec.cuc.edu.cn/
-count=$[ $count + 1 ]
-done
-```
+      - macOS Mojave编写脚本访问`http://dvwa.sec.cuc.edu.cn`
+    ```bash
+    #!/bin/bash
+    # dvwa_frequencytest.sh
+      count=0
+      while [ $count -lt 53 ]
+      do
+         echo "Frequency : $count"
+         curl -v http://dvwa.sec.cuc.edu.cn
+         count=$[ $count + 1 ]
+     done
+    ```
 
-![](/Linux系统与网络管理/chap0x05/images/dvwale50succeed.png)
+    ![](/Linux系统与网络管理/chap0x05/images/dvwale50succeed.png)
 
-- macOS Mojave编写脚本访问`http://wp.sec.cuc.edu.cn`
-```bash
-#!/bin/bash
-# wordpress_frequencytest.sh
-count=0
-while [ $count -lt 23 ]
-do
-echo "Frequency : $count"
-curl -v http://wp.sec.cuc.edu.cn/
-count=$[ $count + 1 ]
-done
-```
+      - macOS Mojave编写脚本访问`http://wp.sec.cuc.edu.cn`
+    ```bash
+    #!/bin/bash
+    # wordpress_frequencytest.sh
+      count=0
+     while [ $count -lt 23 ]
+     do
+        echo "Frequency : $count"
+        curl -v http://wp.sec.cuc.edu.cn/
+        count=$[ $count + 1 ]
+      done
+    ```
 
-![](/Linux系统与网络管理/chap0x05/images/wple20succeed.png)
+    ![](/Linux系统与网络管理/chap0x05/images/wple20succeed.png)
 
-- [ ] 禁止curl访问
+    - [ ] 禁止curl访问
 
-- [x] ubuntu16.04-1配置
-- Matcher 
+    - [x] ubuntu16.04-1配置
+      - Matcher 
 
-![](/Linux系统与网络管理/chap0x05/images/curldisabledm.png)
+       ![](/Linux系统与网络管理/chap0x05/images/curldisabledm.png)
 
-- Response
+      - Response
 
-![](/Linux系统与网络管理/chap0x05/images/curldisabled.png)
 
-- Filter
+    ![](/Linux系统与网络管理/chap0x05/images/curldisabled.png)
 
-![](/Linux系统与网络管理/chap0x05/images/curldisabledf.png)
+      - Filter
 
-- 结果:ubuntu16.04-client执行`curl -v http://dvwa.sec.cuc.edu.cn`
+    ![](/Linux系统与网络管理/chap0x05/images/curldisabledf.png)
 
-![](/Linux系统与网络管理/chap0x05/images/disable_curlsucceed.png)
+      - 结果:ubuntu16.04-client执行`curl -v http://dvwa.sec.cuc.edu.cn`
+
+    ![](/Linux系统与网络管理/chap0x05/images/disable_curlsucceed.png)
 
 ### 六、实验问题
 - [ ] 安装完VeryNginx后无法通过浏览器输入`http://{{your_docker_machine_address}}/verynginx/index.html`打开web面板,结合安装过程中虽然显示了`All work finished successfully，enjoyit`，但是仔细查看安装结果信息存在`openresty not found，so not copy nginx.conf`
@@ -630,8 +631,6 @@ sudo /opt/verynginx/openresty/nginx/sbin/nginx
 `This page isn't working`
 ![](/Linux系统与网络管理/chap0x05/images/QUE-2-4.png)
 
-
-
 ![](/Linux系统与网络管理/chap0x05/images/QUE-2-3.png)
 
 - [x] 修改`/var/www/html/DVWA-master`权限，修改`/etc/php/7.0/fpm/php.ini`把dvwa需要的allow_url_include改成On，查阅资料尝试很多方法但是还是未能解决问题，最终更换新的Ubuntu 16.04虚拟机重新配置环境，dvwa安装配置成功。
@@ -659,12 +658,12 @@ define( 'RELOCATE', true );
 
 #At the bottom add
 if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
-if ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF']) )
-$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], "", $_SERVER['PHP_SELF'] );
+	if ( isset( $_SERVER['PATH_INFO'] ) && ($_SERVER['PATH_INFO'] != $_SERVER['PHP_SELF']) )
+		$_SERVER['PHP_SELF'] = str_replace( $_SERVER['PATH_INFO'], "", $_SERVER['PHP_SELF'] );
 
-$url = dirname( set_url_scheme( 'http://' .  $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ) );
-if ( $url != get_option( 'siteurl' ) )
-update_option( 'siteurl', $url );
+	$url = dirname( set_url_scheme( 'http://' .  $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'] ) );
+	if ( $url != get_option( 'siteurl' ) )
+		update_option( 'siteurl', $url );
 } 
 ```
 ![](/Linux系统与网络管理/chap0x05/images/QUE-3-4.png)
@@ -688,18 +687,6 @@ cd ../
 ![](/Linux系统与网络管理/chap0x05/images/QUE-5-1.png)
 
 - [x] 尝试重新下载verynginx与其他方法均未能解决，应用`git`命令解决问题（实验任务实现已证问题解决）
-- [ ] verynginx配置页面出现`Ajax request failed`
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-1.png)
-
-- [x] 在实现安全加固任务，禁止任意站点通过ip被访问因为Matcher设置了如下，那verynginx本身的通过ip访问也会被禁止掉，为了避免对自身配置页面也被禁止掉，新加配置
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-2.png)
-
-- 访问失败
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-3.png)
-
 - [ ] 在安装dvwa时即使先进行了数据库的配置，但是在ubuntu16.04-3上依据无法连接数据库。
 
 ![](/Linux系统与网络管理/chap0x05/images/QUE-7-2.png)
