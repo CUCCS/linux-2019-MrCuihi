@@ -118,7 +118,7 @@ Mysql安装成功
 #安装php
 sudo apt-get install php-fpm php-mysql
 #禁止PHP尝试执行它找不到所请求的PHP文件时可以找到的最接近的文件
-sudo nano /etc/php/7.0/fpm/php.ini
+sudo vim /etc/php/7.0/fpm/php.ini
 
 ```
 ![](/Linux系统与网络管理/chap0x05/images/2-2-1.png)
@@ -554,10 +554,10 @@ fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
 #!/bin/bash
 # dvwa_frequencytest.sh
 count=0
-while [[ $count -lt 53 ]]
+while [ $count -lt 53 ]
 do
 echo "Frequency : $count"
-curl -I dvwa.sec.cuc.edu.cn/verynginx/index.html
+curl -v http://dvwa.sec.cuc.edu.cn/
 count=$[ $count + 1 ]
 done
 ```
@@ -572,7 +572,7 @@ count=0
 while [ $count -lt 23 ]
 do
 echo "Frequency : $count"
-curl -I wp.sec.cuc.edu.cn/verynginx/index.html
+curl -v http://wp.sec.cuc.edu.cn/
 count=$[ $count + 1 ]
 done
 ```
@@ -688,6 +688,17 @@ cd ../
 ![](/Linux系统与网络管理/chap0x05/images/QUE-5-1.png)
 
 - [x] 尝试重新下载verynginx与其他方法均未能解决，应用`git`命令解决问题（实验任务实现已证问题解决）
+- [ ] verynginx配置页面出现`Ajax request failed`
+
+![](/Linux系统与网络管理/chap0x05/images/QUE-6-1.png)
+
+- [x] 在实现安全加固任务，禁止任意站点通过ip被访问因为Matcher设置了如下，那verynginx本身的通过ip访问也会被禁止掉，为了避免对自身配置页面也被禁止掉，新加配置
+
+![](/Linux系统与网络管理/chap0x05/images/QUE-6-2.png)
+
+- 访问失败
+
+![](/Linux系统与网络管理/chap0x05/images/QUE-6-3.png)
 
 - [ ] 在安装dvwa时即使先进行了数据库的配置，但是在ubuntu16.04-3上依据无法连接数据库。
 
