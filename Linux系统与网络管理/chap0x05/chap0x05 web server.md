@@ -688,17 +688,6 @@ cd ../
 ![](/Linux系统与网络管理/chap0x05/images/QUE-5-1.png)
 
 - [x] 尝试重新下载verynginx与其他方法均未能解决，应用`git`命令解决问题（实验任务实现已证问题解决）
-- [ ] verynginx配置页面出现`Ajax request failed`
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-1.png)
-
-- [x] 在实现安全加固任务，禁止任意站点通过ip被访问因为Matcher设置了如下，那verynginx本身的通过ip访问也会被禁止掉，为了避免对自身配置页面也被禁止掉，新加配置
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-2.png)
-
-- 访问失败
-
-![](/Linux系统与网络管理/chap0x05/images/QUE-6-3.png)
 
 - [ ] 在安装dvwa时即使先进行了数据库的配置，但是在ubuntu16.04-3上依据无法连接数据库。
 
