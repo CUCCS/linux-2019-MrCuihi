@@ -147,9 +147,6 @@ sudo systemctl reload nginx
 
 3. 安装dvwa
 - 到官网下载dvwa `DVWA-master.zip`压缩包，并解压到`var/www/html/`路径下，重命名`sudo mv DVWA-master dvwa`
-
-![](/Linux系统与网络管理/chap0x05/images/2-3-1.png)
-
 - 配置dvwa
 ```bash
 #为DVWA创建用用户
@@ -388,25 +385,24 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
     - [x] ubuntu16.04-1等配置
       - ubuntu16.04-1、ubuntu16.04-client、macOS-client`vim /etc/hosts`配置hosts
 
-
-    ![](/Linux系统与网络管理/chap0x05/images/ubuntu1_hosts.png)
-    ![](/Linux系统与网络管理/chap0x05/images/ubuntuc_hosts.png)
-    ![](/Linux系统与网络管理/chap0x05/images/ubuntum_hosts.png)
+        ![](/Linux系统与网络管理/chap0x05/images/ubuntu1_hosts.png)
+        ![](/Linux系统与网络管理/chap0x05/images/ubuntuc_hosts.png)
+        ![](/Linux系统与网络管理/chap0x05/images/ubuntum_hosts.png)
     
       - Matcher
     
-    ![](/Linux系统与网络管理/chap0x05/images/basic_matcher.png)
+        ![](/Linux系统与网络管理/chap0x05/images/basic_matcher.png)
     
       - Up Stream,Proxy Pass
     
-    ![](/Linux系统与网络管理/chap0x05/images/proxypass.png)
+        ![](/Linux系统与网络管理/chap0x05/images/proxypass.png)
     
       - 结果：Ubuntu16.04-1、macOS-client分别访问`http://dvwa.sec.cuc.edu.cn`,`http://wp.sec.cuc.edu.cn`
-    
-    ![](/Linux系统与网络管理/chap0x05/images/dvwa_proxy.png)
-    ![](/Linux系统与网络管理/chap0x05/images/wp_proxy.png)
-    ![](/Linux系统与网络管理/chap0x05/images/mdvwa_proxy.png)
-    ![](/Linux系统与网络管理/chap0x05/images/mwp_proxy.png)
+     
+        ![](/Linux系统与网络管理/chap0x05/images/dvwa_proxy.png)
+        ![](/Linux系统与网络管理/chap0x05/images/wp_proxy.png)
+        ![](/Linux系统与网络管理/chap0x05/images/mdvwa_proxy.png)
+        ![](/Linux系统与网络管理/chap0x05/images/mwp_proxy.png)
 
  - [ ] PHP-FPM进程的反向代理配置在nginx服务器上，VeryNginx服务器不直接配置Web站点服务
  - [x] wordpress和dvwa在nginx上的配置文件中写入: 
