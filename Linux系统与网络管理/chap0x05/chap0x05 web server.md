@@ -26,26 +26,34 @@
     - 禁止curl访问
 
 ### 三、实验环境
-- 实验环境服务器ip地址说明：由于实验时间跨度交到，分别多次进行，开启服务器顺序不同，所以ip地址设置并不唯一不变，但三个服务器均配置NAT与hostonly：196.168.56.*/24两块网卡
+- 实验环境服务器ip地址说明：由于实验时间跨度交到，分别多次进行，开启服务器顺序不同，所以ip地址设置并不唯一不变，但三个服务器均配置NAT与hostonly：196.168.56.*/24两块网卡(下列标明实验结果中展示服务器与客户机ip地址)
+
 - 服务器×3
   -  Ubuntu 16.04-1
      - Ubuntu 16.04 desktop 64bit
-     - host only，NAT
+     - host only:192.168.56.104，NAT
      - nginx/1.10.0
      - verynginx
   -  ubuntu 16.04-2
       - Ubuntu 16.04 desktop 64bit
-      - host only,NAT
+      - host only:192.168.56.101,NAT
       - wordpress 4.
       - nginx
   -  ubuntu 16.04-3
      - Ubuntu 16.04 desktop 64bit
-     - host only,NAT
+     - host only:192.168.56.103,NAT
      - dvwa 1.10
      - nginx
+     
+服务器名称   |       ubuntu16.04-1         |     ubuntu16.04-2       |         ubuntu16.04-3
+    ---    |            ---              |           ---           |               ---
+ ip 地址    |       192.168.56.104        |      192.168.56.101     |         192.168.56.103
+   配置     | verynginx+nginx(http:80端口) | dvwa+nginx(http:80端口) | wordpress+nginx(http:80端口;https:443端口)
+
 - 客户端×2
    - macOS Mojave 10.14.4
    - ubuntu16.04-client（PD虚拟机内部）
+     - host only:192.168.56.102
 
 ### 四、实验过程
 #### (一) 安装配置环境
@@ -384,17 +392,17 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
     ![](/Linux系统与网络管理/chap0x05/images/ubuntu1_hosts.png)
     ![](/Linux系统与网络管理/chap0x05/images/ubuntuc_hosts.png)
     ![](/Linux系统与网络管理/chap0x05/images/ubuntum_hosts.png)
-
+    
       - Matcher
-
+    
     ![](/Linux系统与网络管理/chap0x05/images/basic_matcher.png)
-
+    
       - Up Stream,Proxy Pass
-
+    
     ![](/Linux系统与网络管理/chap0x05/images/proxypass.png)
-
+    
       - 结果：Ubuntu16.04-1、macOS-client分别访问`http://dvwa.sec.cuc.edu.cn`,`http://wp.sec.cuc.edu.cn`
-
+    
     ![](/Linux系统与网络管理/chap0x05/images/dvwa_proxy.png)
     ![](/Linux系统与网络管理/chap0x05/images/wp_proxy.png)
     ![](/Linux系统与网络管理/chap0x05/images/mdvwa_proxy.png)
@@ -425,6 +433,7 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
 #### 安全加固要求
 
 - [ ] 使用IP地址方式均无法访问上述任意站点，并向访客展示自定义的友好错误提示信息页面-1
+
 - [x] ubuntu16.04-1配置
    - Matcher
 
@@ -443,6 +452,7 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
      ![](/Linux系统与网络管理/chap0x05/images/ip_dissucceed.png)
 
 - [ ] Damn Vulnerable Web Application (DVWA)只允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的友好错误提示信息页面-2
+
 - [x] ubuntu16.04-1配置:将ubuntu16.04-client ip：`192.168.56.102`列入白名单
    - Matcher
 
@@ -467,21 +477,48 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
 
    - Matcher
 
-     ![](/Linux系统与网络管理/chap0x05/images/wp_uedisabled.png)
+      ![](/Linux系统与网络管理/chap0x05/images/wp_uedisabled.png)
+
+   - Response
+
+      ![](/Linux系统与网络管理/chap0x05/images/wp_ueresponse.png)
 
    - Filter
 
-     ![](/Linux系统与网络管理/chap0x05/images/wp_uefilter.png)
+      ![](/Linux系统与网络管理/chap0x05/images/wp_uefilter.png)
 
-   - 结果：ubuntu16.04-client访问`wp.sec.cuc.edu.cn/wp-json/wp/v2/users`
-     - 未设置过滤规则之前
+   - 结果：ubuntu16.04-client访问`wp.sec.cuc.edu.cn/wp-json/wp/v2/users/`
+      - 未设置过滤规则之前
 
-     ![](/Linux系统与网络管理/chap0x05/images/wp_uefailed.png)     
+         ![](/Linux系统与网络管理/chap0x05/images/wp_uefailed.png)     
 
      - 设置过滤规则后
 
-     ![](/Linux系统与网络管理/chap0x05/images/wp_uesucceed.png)
+        ![](/Linux系统与网络管理/chap0x05/images/wp_uesucceed.png)
+      
+- [ ] 在不升级Wordpress版本的情况下，通过定制VeryNginx的访问控制策略规则，热修复WordPress < 4.7.1 - Username Enumeration
+- [x] ubuntu16.04-1配置[`访问/wp-json/wp/v2/users/可以获取wordpress用户信息的json数据，禁止访问·`wp.sec.cuc.edu.cn`站点的/wp-json/wp/v2/users/路径`](https://github.com/CUCCS/linux/blob/master/2017-1/zjy/exp5/exp5%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A.md)
 
+- Matcher
+
+![](/Linux系统与网络管理/chap0x05/images/wp_uedisabled.png)
+
+- Response
+
+![](/Linux系统与网络管理/chap0x05/images/wp_ueresponse.png)
+
+- Filter
+
+![](/Linux系统与网络管理/chap0x05/images/wp_uefilter.png)
+
+- 结果：ubuntu16.04-client访问`wp.sec.cuc.edu.cn/wp-json/wp/v2/users/`
+- 未设置过滤规则之前
+
+![](/Linux系统与网络管理/chap0x05/images/wp_uefailed.png)     
+
+- 设置过滤规则后
+
+![](/Linux系统与网络管理/chap0x05/images/wp_uesucceed.png)
 
 - [ ] 通过配置VeryNginx的Filter规则实现对Damn Vulnerable Web Application (DVWA)的SQL注入实验在低安全等级条件下进行防护
 - [x] ubuntu16.04-1、ubuntu16.04-3配置
@@ -542,42 +579,25 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
     - [ ] 超过访问频率限制的请求直接返回自定义错误提示信息页面-4
     - [x] ubuntu16.04-1配置
       - Frequency Limit
-
+      
        ![](/Linux系统与网络管理/chap0x05/images/frequencylimit.png)
 
       - Response
-
+     
        ![](/Linux系统与网络管理/chap0x05/images/frequencylimitRE.png)
-
-      - macOS Mojave编写脚本访问`http://dvwa.sec.cuc.edu.cn`
-    ```bash
-    #!/bin/bash
-    # dvwa_frequencytest.sh
-      count=0
-      while [ $count -lt 53 ]
-      do
-         echo "Frequency : $count"
-         curl -v http://dvwa.sec.cuc.edu.cn
-         count=$[ $count + 1 ]
-     done
-    ```
-
-    ![](/Linux系统与网络管理/chap0x05/images/dvwale50succeed.png)
-
-      - macOS Mojave编写脚本访问`http://wp.sec.cuc.edu.cn`
-    ```bash
-    #!/bin/bash
-    # wordpress_frequencytest.sh
-      count=0
-     while [ $count -lt 23 ]
-     do
-        echo "Frequency : $count"
-        curl -v http://wp.sec.cuc.edu.cn/
-        count=$[ $count + 1 ]
-      done
-    ```
-
-    ![](/Linux系统与网络管理/chap0x05/images/wple20succeed.png)
+       
+      - 结果
+      
+        ![](/Linux系统与网络管理/chap0x05/images/dvwale50succeed.png)
+        ![](/Linux系统与网络管理/chap0x05/images/wple20succeed.png)
+        
+        - ubuntu16.04-client执行`sudo apt install apache2-utils`安装`apache2-utils`，执行`ab -c 30 -n 53 http://dvwa.sec.cuc.edu.cn/`
+      
+          ![](/Linux系统与网络管理/chap0x05/images/dvwale50succeed1.png)
+        
+        - ubuntu16.04-client执行`ab -c 10 -n 23 http://wp.sec.cuc.edu.cn/`
+     
+          ![](/Linux系统与网络管理/chap0x05/images/wple20succeed1.png)
 
     - [ ] 禁止curl访问
 
@@ -590,13 +610,13 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set
 
 
     ![](/Linux系统与网络管理/chap0x05/images/curldisabled.png)
-
+    
       - Filter
-
+    
     ![](/Linux系统与网络管理/chap0x05/images/curldisabledf.png)
-
+    
       - 结果:ubuntu16.04-client执行`curl -v http://dvwa.sec.cuc.edu.cn`
-
+    
     ![](/Linux系统与网络管理/chap0x05/images/disable_curlsucceed.png)
 
 ### 六、实验问题
@@ -695,6 +715,31 @@ cd ../
 
 ![](/Linux系统与网络管理/chap0x05/images/QUE-7-1.png)
 
+- [ ] 初始通过在ubuntu16.04-client编写bash脚本多次访问`http://wp.sec.edu.cn`与`http://dvwa.sec.edu.cn`但是存在curl命令错误问题
+    ```bash
+        #!/bin/bash
+        # dvwa_frequencytest.sh
+          count=1
+          while [ $count -lt 53 ]
+          do
+             echo "Frequency : $count"
+             curl -I dvwa.sec.cuc.edu.cn
+             count=$[ $count + 1 ]
+         done
+    ```
+    ```bash
+        #!/bin/bash
+        # wordpress_frequencytest.sh
+          count=1
+         while [ $count -lt 23 ]
+         do
+            echo "Frequency : $count"
+            curl -I wp.sec.cuc.edu.cn
+            count=$[ $count + 1 ]
+          done
+   ```
+- [ ] 未解决curl命令执行错误，执行`sudo apt install apache2-utils`安装1`apache2-utils`，并分别执行`ab -c 30 -n 53 http://dvwa.sec.cuc.edu.cn/`
+`ab -c 10 -n 23 http://wp.sec.cuc.edu.cn/`实现高频访问，实验结果中已经展示。
 - [x] 选择用三个虚拟机实现三个服务器，个人认为这样更能模拟真实场景。综合整个实验过程，遇到很多问题，完成整个实验花费时间较长，搜索针对性学习文章、处理选择信息的能力、解决问题能力均有待进一步提高。
 
 ### 七、实验参考
