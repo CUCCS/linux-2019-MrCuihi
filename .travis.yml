@@ -17,35 +17,35 @@ before_install:
 
 script:
   - bash test.sh
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -h
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -q 900 Linux系统与网络管理/chap0x04/images/car.jpeg dcar.jpeg
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 50% Linux系统与网络管理/chap0x04/images/o666.png ro666.png
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -r 256x256 Linux系统与网络管理/chap0x04/images/car.jpeg rcar.jpeg
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/car.jpeg thisisfun wcar.jpeg
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -w Linux系统与网络管理/chap0x04/images/o666.png thisisfun wo666.png
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car.jpeg mmm --prefix
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -m Linux系统与网络管理/chap0x04/images/car.jpeg nnn --suffix
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/o666.png co666.jpeg  
-  - bash Linux系统与网络管理/chap0x04/script/imgpro.sh -c Linux系统与网络管理/chap0x04/images/gen.svg cgen.jpeg 
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -h
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -q 900 Linux系统与网络管理/chap0x04_resolve/images/car.jpeg dcar.jpeg
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -r 50% Linux系统与网络管理/chap0x04_resolve/images/o666.png ro666.png
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -r 256x256 Linux系统与网络管理/chap0x04_resolve/images/car.jpeg rcar.jpeg
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -w Linux系统与网络管理/chap0x04_resolve/images/car.jpeg thisisfun wcar.jpeg
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -w Linux系统与网络管理/chap0x04_resolve/images/o666.png thisisfun wo666.png
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -m Linux系统与网络管理/chap0x04_resolve/images/car.jpeg mmm --prefix
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -m Linux系统与网络管理/chap0x04_resolve/images/car.jpeg nnn --suffix
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -c Linux系统与网络管理/chap0x04_resolve/images/o666.png co666.jpeg  
+  - bash Linux系统与网络管理/chap0x04_resolve/script/imgpro.sh -c Linux系统与网络管理/chap0x04_resolve/images/gen.svg cgen.jpeg 
   
-  - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -h
-  - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -rage
-  - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -posi
-  - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -name
-  - bash Linux系统与网络管理/chap0x04/script/worldinfoproc.sh -tage
+  - bash Linux系统与网络管理/chap0x04_resolve/script/worldinfoproc.sh -h
+  - bash Linux系统与网络管理/chap0x04_resolve/script/worldinfoproc.sh -rage
+  - bash Linux系统与网络管理/chap0x04_resolve/script/worldinfoproc.sh -posi
+  - bash Linux系统与网络管理/chap0x04_resolve/script/worldinfoproc.sh -name
+  - bash Linux系统与网络管理/chap0x04_resolve/script/worldinfoproc.sh -tage
   
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -h
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -h
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -th 
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -ti
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -tu
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -sp
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -su
-  - bash Linux系统与网络管理/chap0x04/script/webtextbach.sh -gu /shuttle/resources/orbiters/discovery.html
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -h
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -h
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -th 
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -ti
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -tu
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -sp
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -su
+  - bash Linux系统与网络管理/chap0x04_resolve/script/webtextbach.sh -gu /shuttle/resources/orbiters/discovery.html
 
 after_script:
   - /usr/bin/shellcheck test.sh
-  - /usr/bin/shellcheck Linux系统与网络管理/chap0x04/script/*.sh
+  - /usr/bin/shellcheck Linux系统与网络管理/chap0x04_resolve/script/*.sh
 
 after_failure:
   - id
